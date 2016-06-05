@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.user.bluetooth_data_transfer">
 
+    //app to initiate device discovery or manipulate Bluetooth settings ,Declare the Bluetooth permission(s)
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+    //declare that your app is available to all devices and if you want for only BLE-capable devices, then set required ="true"
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Bluetooth_Data_Transfer</string>
+    <string name="ble_not_supported">BLE Not Supported </string>
+    <string name="ble_supported">BLE is Supported </string>
+
 </resources>

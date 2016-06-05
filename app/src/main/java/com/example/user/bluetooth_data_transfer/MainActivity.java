@@ -1,6 +1,7 @@
 package com.example.user.bluetooth_data_transfer;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_ENABLE_BT = 0;
     private BluetoothAdapter mBluetoothAdapter;
+    private  BluetoothDevice mDevice = null;
+    ConnectThread mConnectThread;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +34,31 @@ public class MainActivity extends AppCompatActivity {
 
         //enableBluetooth and option to enable bluetooth services
         enableBluetooth();
+        
+        //retrieve actual bluetooth devices
+        getPairedDevices();
+        
+        //establish connection between bluetooth devices on separate thread
+        getConnection();
+        
+        
+        
 
 
+    }
 
+    private void getConnection() {
+        mConnectThread = new ConnectThread(mDevice,mBluetoothAdapter);
+        mConnectThread.start();
+    }
+
+    private void getPairedDevices() {
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice device : pairedDevices) {
+                mDevice = device;
+            }
+        }
     }
 
     private void enableBluetooth() {
@@ -61,4 +89,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.ble_supported, Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    
 }
